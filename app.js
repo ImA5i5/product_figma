@@ -2,7 +2,10 @@ require("dotenv").config();
 const express = require("express");
 const cookieParser = require("cookie-parser");
 const dbConn=require("./app/config/db")
+
 const { auth } = require("./app/middlewares/auth.middleware");
+const swaggerUi = require("swagger-ui-express");
+const swaggerSpec = require("./app/config/swagger");
 const app = express();
 dbConn()
 
@@ -26,7 +29,7 @@ app.use("/api/user",UserRoutes)
 
 
 
-
+app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 
 
