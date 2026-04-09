@@ -24,10 +24,19 @@ const userSchema = new mongoose.Schema(
       type: Boolean,
       default: false
     },
+     lastLogin: {
+      type: Date,
+      default: null
+    },
+    isLoggedIn: {
+      type: Boolean,
+      default: false
+    },
     otp: String,
     otpExpiry: Date,
     refreshToken: String
   },
+ 
   { timestamps: true }
 );
 

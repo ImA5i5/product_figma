@@ -7,7 +7,7 @@ const {
 const { sendEmail } = require("../utils/sendEmail");
 
 class AuthController {
-  // ✅ REGISTER
+  //  REGISTER
   static async register(req, res) {
     try {
       const { name, email, password, role } = req.body;
@@ -47,7 +47,7 @@ class AuthController {
     }
   }
 
-  // ✅ VERIFY OTP
+  //  VERIFY OTP
   static async verifyOTP(req, res) {
     try {
       const { email, otp } = req.body;
@@ -80,7 +80,7 @@ class AuthController {
     }
   }
 
-  // ✅ LOGIN
+  //  LOGIN
   static async login(req, res) {
     try {
       const { email, password } = req.body;
@@ -111,6 +111,8 @@ class AuthController {
       const refreshToken = generateRefreshToken(user);
 
       user.refreshToken = refreshToken;
+       user.lastLogin = new Date();
+    user.isLoggedIn = true;
       await user.save();
 
       return res.json({
@@ -130,7 +132,7 @@ class AuthController {
     }
   }
 
-  // ✅ REFRESH TOKEN
+  //  REFRESH TOKEN
   static async refreshToken(req, res) {
     try {
       const { refreshToken } = req.body;

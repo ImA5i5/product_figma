@@ -7,6 +7,7 @@ const BrandController = require("../controllers/brand.controller");
 const { upload, uploadToCloudinary } = require("../middlewares/upload.middleware");
 
 const ShoeController = require("../controllers/shoe.controller");
+const UserController=require("../controllers/user.controller")
 
 /**
  * @swagger
@@ -647,6 +648,83 @@ router.patch(
   "/shoes/:id/unpublish",
   allowRoles("admin"),
   ShoeController.unpublish
+);
+
+
+/**
+ * @swagger
+ * /admin/users:
+ *   get:
+ *     summary: Get all users
+ *     description: Admin can view all registered users
+ *     tags: [Admin - Users]
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: List of users
+ *       403:
+ *         description: Forbidden
+ */
+router.get(
+  "/users",
+  allowRoles("admin"),
+  UserController.getAllUsers
+);
+
+/**
+ * @swagger
+ * /admin/active-users:
+ *   get:
+ *     summary: Get all active (logged-in) users
+ *     description: Admin can view all users who are currently logged in or recently active
+ *     tags: [Admin - Users]
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: List of active users
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 count:
+ *                   type: number
+ *                   example: 2
+ *                 data:
+ *                   type: array
+ *                   items:
+ *                     type: object
+ *                     properties:
+ *                       _id:
+ *                         type: string
+ *                         example: 64user123
+ *                       name:
+ *                         type: string
+ *                         example: John Doe
+ *                       email:
+ *                         type: string
+ *                         example: john@gmail.com
+ *                       role:
+ *                         type: string
+ *                         example: user
+ *                       lastLogin:
+ *                         type: string
+ *                         format: date-time
+ *                         example: 2026-04-09T10:00:00Z
+ *                       isLoggedIn:
+ *                         type: boolean
+ *                         example: true
+ *       401:
+ *         description: Unauthorized (invalid or missing token)
+ *       403:
+ *         description: Forbidden (Admin only)
+ */
+router.get(
+  "/active-users",
+  allowRoles("admin"),
+  UserController.getLoggedInUsers
 );
 
 module.exports = router;
