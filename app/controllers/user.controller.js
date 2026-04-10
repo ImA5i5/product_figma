@@ -18,15 +18,18 @@ class UserController {
       });
     }
   }
-  static async getLoggedInUsers(req, res) {
+static async getUserLoginStats(req, res) {
   try {
-    const users = await User.find({ isLoggedIn: true })
-      .select("-password")
+    const users = await User.find({
+      role: "user",                 // only normal users
+      lastLogin: { $ne: null }      // users who have logged in at least once
+    })
+      .select("-password -refreshToken")
       .sort({ lastLogin: -1 });
 
     return res.json({
-      count: users.length,
-      data: users
+      totalLoggedInUsers: users.length,
+      users
     });
   } catch (error) {
     return res.status(500).json({

@@ -674,57 +674,45 @@ router.get(
 
 /**
  * @swagger
- * /admin/active-users:
+ * /admin/user-login-stats:
  *   get:
- *     summary: Get all active (logged-in) users
- *     description: Admin can view all users who are currently logged in or recently active
+ *     summary: Get users who have logged in (role = user)
+ *     description: Admin can see how many users have logged in at least once along with their details
  *     tags: [Admin - Users]
  *     security:
  *       - bearerAuth: []
  *     responses:
  *       200:
- *         description: List of active users
+ *         description: List of users who have logged in
  *         content:
  *           application/json:
  *             schema:
  *               type: object
  *               properties:
- *                 count:
+ *                 totalLoggedInUsers:
  *                   type: number
- *                   example: 2
- *                 data:
+ *                   example: 3
+ *                 users:
  *                   type: array
  *                   items:
  *                     type: object
  *                     properties:
  *                       _id:
  *                         type: string
- *                         example: 64user123
  *                       name:
  *                         type: string
- *                         example: John Doe
  *                       email:
  *                         type: string
- *                         example: john@gmail.com
  *                       role:
  *                         type: string
- *                         example: user
  *                       lastLogin:
  *                         type: string
  *                         format: date-time
- *                         example: 2026-04-09T10:00:00Z
- *                       isLoggedIn:
- *                         type: boolean
- *                         example: true
- *       401:
- *         description: Unauthorized (invalid or missing token)
- *       403:
- *         description: Forbidden (Admin only)
  */
 router.get(
-  "/active-users",
+  "/user-login-stats",
   allowRoles("admin"),
-  UserController.getLoggedInUsers
+  UserController.getUserLoginStats
 );
 
 module.exports = router;
