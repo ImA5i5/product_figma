@@ -14,9 +14,9 @@ const AuthController = require("../controllers/auth.controller");
  * @swagger
  * /auth/register:
  *   post:
- *     summary: Register a new user (Admin/User)
+ *     summary: Register a new user
+ *     description: Create a new account (no OTP verification required)
  *     tags: [Auth]
- *     description: Creates a new user and sends OTP to email for verification
  *     requestBody:
  *       required: true
  *       content:
@@ -27,7 +27,6 @@ const AuthController = require("../controllers/auth.controller");
  *               - name
  *               - email
  *               - password
- *               - role
  *             properties:
  *               name:
  *                 type: string
@@ -40,45 +39,16 @@ const AuthController = require("../controllers/auth.controller");
  *                 example: 123456
  *               role:
  *                 type: string
- *                 enum: [user, admin]
  *                 example: user
  *     responses:
  *       201:
- *         description: User registered successfully, OTP sent
+ *         description: User registered successfully
  *       400:
  *         description: User already exists
  */
 router.post("/register", AuthController.register);
 
-/**
- * @swagger
- * /auth/verify-otp:
- *   post:
- *     summary: Verify OTP
- *     tags: [Auth]
- *     description: Verifies user email using OTP sent during registration
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             required:
- *               - email
- *               - otp
- *             properties:
- *               email:
- *                 type: string
- *                 example: john@gmail.com
- *               otp:
- *                 type: string
- *                 example: "123456"
- *     responses:
- *       200:
- *         description: Email verified successfully
- *       400:
- *         description: Invalid or expired OTP
- */
+
 // router.post("/verify-otp", AuthController.verifyOTP);
 
 /**
