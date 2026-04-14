@@ -1,5 +1,11 @@
 const swaggerJsdoc = require("swagger-jsdoc");
 
+// ✅ dynamic base URL
+const baseUrl =
+  process.env.NODE_ENV === "production"
+    ? "https://product-figma-5.onrender.com/api"
+    : "http://localhost:3000/api";
+
 const options = {
   definition: {
     openapi: "3.0.0",
@@ -8,11 +14,14 @@ const options = {
       version: "1.0.0",
       description: "API documentation for Shoe Ecommerce Project"
     },
+
+    // ✅ FIXED HERE
     servers: [
       {
-        url: "http://localhost:3000/api"
+        url: baseUrl
       }
     ],
+
     components: {
       securitySchemes: {
         bearerAuth: {
@@ -22,6 +31,7 @@ const options = {
         }
       }
     },
+
     security: [
       {
         bearerAuth: []
@@ -29,7 +39,6 @@ const options = {
     ]
   },
 
-  
   apis: ["./app/routes/*.js"]
 };
 
