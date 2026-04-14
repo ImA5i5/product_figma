@@ -450,18 +450,68 @@ router.post(
 
 // GET ALL SHOES (ADMIN)
 
+
+
 /**
  * @swagger
  * /admin/shoes:
  *   get:
  *     summary: Get all shoes (Admin)
- *     description: Retrieve all shoes including published and unpublished
+ *     description: Retrieve all shoes including published and unpublished with pagination
  *     tags: [Admin - Shoes]
  *     security:
  *       - bearerAuth: []
+ *     parameters:
+ *       - in: query
+ *         name: page
+ *         required: false
+ *         description: Page number
+ *         schema:
+ *           type: number
+ *           example: 1
+ *       - in: query
+ *         name: limit
+ *         required: false
+ *         description: Number of items per page
+ *         schema:
+ *           type: number
+ *           example: 10
  *     responses:
  *       200:
- *         description: List of shoes
+ *         description: Paginated list of shoes
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 total:
+ *                   type: number
+ *                   example: 50
+ *                 page:
+ *                   type: number
+ *                   example: 1
+ *                 totalPages:
+ *                   type: number
+ *                   example: 5
+ *                 limit:
+ *                   type: number
+ *                   example: 10
+ *                 count:
+ *                   type: number
+ *                   example: 10
+ *                 data:
+ *                   type: array
+ *                   items:
+ *                     type: object
+ *                     properties:
+ *                       _id:
+ *                         type: string
+ *                       name:
+ *                         type: string
+ *                       price:
+ *                         type: number
+ *                       isPublished:
+ *                         type: boolean
  *       401:
  *         description: Unauthorized
  */
