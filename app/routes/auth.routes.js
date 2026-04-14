@@ -79,7 +79,7 @@ router.post("/register", AuthController.register);
  *       400:
  *         description: Invalid or expired OTP
  */
-router.post("/verify-otp", AuthController.verifyOTP);
+// router.post("/verify-otp", AuthController.verifyOTP);
 
 /**
  * @swagger
